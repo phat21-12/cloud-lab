@@ -39,6 +39,42 @@ function App() {
     loadStudents()
   }
 
+const handleEdit = async (student) => {
+  const newName = window.prompt('Nhập họ tên mới:', student.name)
+  if (!newName) return
+
+  const newEmail = window.prompt('Nhập email mới:', student.email)
+  if (!newEmail) return
+
+  await fetch(`/api/students/${student._id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      studentId: student.studentId,
+      name: newName,
+      email: newEmail
+    })
+  })
+
+  loadStudents()
+}
+
+const handleDelete = async (student) => {
+  const confirmDelete = window.confirm(
+    `Bạn có chắc muốn xóa ${student.name} không?`
+  )
+
+  if (!confirmDelete) return
+
+  await fetch(`/api/students/${student._id}`, {
+    method: 'DELETE'
+  })
+
+  loadStudents()
+}
+
  return (
   <div className="container">
       <h1>Quản lý sinh viên</h1>
@@ -78,12 +114,31 @@ function App() {
       <h2>Danh sách sinh viên</h2>
 
       <ul>
-        {students.map((student) => (
-          <li key={student._id}>
-            {student.studentId} - {student.name} - {student.email}
-          </li>
-        ))}
-      </ul>
+  {students.map((student) => (
+    <li key={student._id}>
+      <span>
+        {student.studentId} - {student.name} - {student.email}
+      </span>
+
+      <div className="action-buttons">
+        <button
+          type="button"
+          onClick={() => handleEdit(student)}
+        >
+          Sửa
+        </button>
+
+        <button
+          type="button"
+          className="delete-btn"
+          onClick={() => handleDelete(student)}
+        >
+          Xóa
+        </button>
+      </div>
+    </li>
+  ))}
+</ul>
     </div>
   )
 }

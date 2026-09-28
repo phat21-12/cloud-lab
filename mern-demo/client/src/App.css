@@ -58,8 +58,41 @@ ul {
 
 li {
   background: #f3f4f6;
-  margin-bottom: 10px;
-  padding: 14px;
-  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
   color: #111827;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+li span {
+  flex: 1;
+}
+
+li button {
+  flex-shrink: 0;
+  padding: 9px 18px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.action-buttons button {
+  min-width: 74px;
+}
+
+.delete-btn {
+  background: #dc2626 !important;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #b91c1c !important;
 }
