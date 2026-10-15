@@ -1,6 +1,8 @@
 import './App.css'
 import { useEffect, useState } from 'react'
 
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 function App() {
   const [students, setStudents] = useState([])
   const [form, setForm] = useState({
@@ -10,7 +12,7 @@ function App() {
   })
 
   const loadStudents = async () => {
-    const res = await fetch('/api/students')
+    const res = await fetch(`${API_URL}/api/students`)
     const data = await res.json()
     setStudents(data)
   }
@@ -22,7 +24,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await fetch('/api/students', {
+    await fetch(`${API_URL}/api/students`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -46,7 +48,7 @@ const handleEdit = async (student) => {
   const newEmail = window.prompt('Nhập email mới:', student.email)
   if (!newEmail) return
 
-  await fetch(`/api/students/${student._id}`, {
+  await fetch(`${API_URL}/api/students/${student._id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -68,7 +70,7 @@ const handleDelete = async (student) => {
 
   if (!confirmDelete) return
 
-  await fetch(`/api/students/${student._id}`, {
+  await fetch(`${API_URL}/api/students/${student._id}`, {
     method: 'DELETE'
   })
 
